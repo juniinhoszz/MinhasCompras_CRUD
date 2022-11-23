@@ -1,12 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MinhasCompras_CRUD.Views.ComprasLista">
+             x:Class="MinhasCompras_CRUD.Views.ComprasLista"
+             Title="Lista de Compras">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="btn_somar" Text="Somar" Clicked="btn_somar_Clicked" />
+        <ToolbarItem x:Name="btn_add" Text="Adicionar" Clicked="btn_add_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="stacklayoutStyle" TargetType="StackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#550065" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <SearchBar x:Name="txt_search"
+                       Margin="-13, 3, 0, 0"
+                       Placeholder="Pesquisar Produtos"
+                       TextChanged="txt_search_TextChanged" 
+                       TextColor="Black"/>
+
+            <RefreshView x:Name="ref_carregando" 
+                         IsRefreshing="False" 
+                         Refreshing="lst_produtos_Refreshing">
+
+                
+                <ListView x:Name="list_produtos" 
+                          Margin="10,10,10,0"
+                          ItemSelected="list_produtos_ItemSelected">
+                    <ListView.Header>
+                        <Grid ColumnDefinitions="3*, *, *, *" RowDefinitions="Auto">
+                            <Label Grid.Row="0" Grid.Column="0" FontAttributes="Bold" Text="PRODUTO" TextColor="Black"/>
+                                <Label Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Text="QNT"  TextColor="Black"/>
+                                <Label Grid.Row="0" Grid.Column="2" FontAttributes="Bold" Text="PREÇO" TextColor="Black"/>
+                                <Label Grid.Row="0" Grid.Column="3" FontAttributes="Bold" Text="TOTAL" TextColor="Black"/>
+                        </Grid>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem x:Name="btn_Remover" Text="Remover" Clicked="btn_Remover_Clicked"/>
+                                </ViewCell.ContextActions>
+
+                                
+                                    <StackLayout Style="{StaticResource stacklayoutStyle}">
+                                        <Grid ColumnDefinitions="3*, *, *, *" RowDefinitions="Auto">
+                                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nome}" TextColor="Black" FontSize="16" Margin="0,10,0,0"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Quantidade}" TextColor="Black" FontSize="16" Margin="10,10,0,0"/>
+                                        <Label Grid.Row="0" Grid.Column="2" Text="{Binding Preco, StringFormat='{}{0:c}'}" TextColor="Black" FontSize="16" Margin="0,10,0,0"/>
+                                        <Label Grid.Row="0" Grid.Column="3" Text="{Binding PrecoTotal, StringFormat='{}{0:c}'}" TextColor="Black" FontSize="16" Margin="0,10,0,0"/>
+                                        </Grid>
+                                    </StackLayout>
+                                
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+            </RefreshView>
+
+            <Button x:Name="btnFinalizar"
+                    Text="Finalizar Lista" BackgroundColor="#550065"
+                    TextColor="White"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    CornerRadius="10" HeightRequest="50" WidthRequest="200"
+                    FontAttributes="Bold"
+                    Margin="10"
+                    Clicked="btnFinalizar_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

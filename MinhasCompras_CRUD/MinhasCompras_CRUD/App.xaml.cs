@@ -33,7 +33,7 @@ namespace MinhasCompras_CRUD
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ComprasLista());
+            MainPage = new NavigationPage(new ComprasLista()) { BarBackgroundColor = Color.FromHex("#550065"), BarTextColor = Color.White };
         }
 
         protected override void OnStart()

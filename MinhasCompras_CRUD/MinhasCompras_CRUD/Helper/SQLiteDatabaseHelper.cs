@@ -23,7 +23,7 @@ namespace MinhasCompras_CRUD.Helper
 
         public Task<List<Produto>> Update(Produto p)
         {
-            string sql = "UPDATE Produto SET Nome = ?, Qnt = ?, Preco = ? WHERE id = ?";
+            string sql = "UPDATE Produto SET Nome = ?, Quantidade = ?, Preco = ? WHERE id = ?";
 
             return _conexao.QueryAsync<Produto>(sql, p.Nome, p.Quantidade, p.Preco, p.Id);
         }
@@ -31,6 +31,11 @@ namespace MinhasCompras_CRUD.Helper
         public Task<List<Produto>> GellAll()
         {
             return _conexao.Table<Produto>().ToListAsync();
+        }
+
+        public Produto GetById()
+        {
+            return new Produto();
         }
 
         public Task<int> Delete(int id)

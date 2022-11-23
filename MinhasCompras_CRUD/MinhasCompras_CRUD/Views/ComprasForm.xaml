@@ -1,12 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MinhasCompras_CRUD.Views.ComprasForm">
+             x:Class="MinhasCompras_CRUD.Views.ComprasForm"
+             Title="{Binding Source={x:Reference txt_nome}, Path=Text}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked" Text="Salvar" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Frame>
+                <StackLayout>
+                    <Label Text="Produto:" />
+                    <Entry x:Name="txt_nome" Text="{Binding Nome }" />
+
+                    <Label Text="Quantidade:" />
+                    <Entry x:Name="txt_qnt" Text="{Binding Quantidade}"  TextChanged="atualiza_total_TextChanged"  Keyboard="Numeric" />
+
+                    <Label Text="Preço:" />
+                    <Entry x:Name="txt_preco" Text="{Binding Preco}" TextChanged="atualiza_total_TextChanged"  Keyboard="Numeric" />
+
+                    <Label Text="Total Item:" />
+                    <Entry x:Name="txt_total_item" 
+                           Text="{Binding PrecoTotal, StringFormat='{}{0:c}'}" 
+                           IsReadOnly="True" />
+
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
